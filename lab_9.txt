@@ -1,0 +1,67 @@
+import mysql.connector
+dataBase=mysql.connector.connect(
+    host='localhost',
+    user='root',
+    passwd='Hayvanlar14.'
+)
+#cursorOb=dataBase.cursor()
+#cursorOb.execute("CREATE DATABASE MyNewDatabase")
+#connection=mysql.connector.connect(host='localhost',
+                                        #user='root',
+                                        #passwd='Hayvanlar14.',
+                                        #database='MyNewDatabase')
+try:
+    connection=mysql.connector.connect( host='localhost',
+                                        user='root',
+                                        passwd='Hayvanlar14.',
+                                        database='MyNewDatabase')
+
+    #mySQL_CREATE=""" CREATE TABLE Marvel(
+    #                       ID int(11) NOT NULL AUTO_INCREMENT,
+    #                       MovieName VARCHAR(60) NOT NULL,
+    #                       Date VARCHAR(60) NOT NULL,
+    #                       MCU_Phase VARCHAR(60) NOT NULL,
+    #                       PRIMARY KEY (ID) ) """
+
+    sql_Select="select MovieName from Marvel"
+    cursor=connection.cursor()
+    cursor.execute(sql_Select)
+    records=cursor.fetchall()
+    print("\n Printing each row")
+    for row in records:
+        print(row)
+
+    #mySQL_Insert=""" INSERT INTO Marvel
+    #                (ID,MovieName,Date,MCU_Phase)
+    #                 VALUES (%s,%s,%s,%s)"""
+    #with open("C:\\Users\\zeyne\\OneDrive\\Desktop\\ce 223\\Marvel.txt","r") as f:
+    #  for line in f:
+    #        x = line.split()
+    #        record = (x[0], x[1], x[2], x[3])
+    #        cursor.execute(mySQL_Insert, record)
+    #        connection.commit()
+
+    #cursor.execute(mySQL_CREATE)
+    #print("Marvel Table created successfully")
+
+    #cursor.execute("SHOW TABLES")
+    #for Marvel in cursor:
+    #   print(Marvel)
+
+except mysql.connector.Error as e:
+    print("Failed to create table in MySQL:{}".format(e))
+finally:
+    if connection.is_connected():
+        cursor.close()
+        connection.close()
+        print("MySQL connection is closed.")
+
+
+
+#if connection.is_connected():
+#    db_Info=connection.get_server_info()
+#    print("Connected to MYSQL SERVER version",db_Info)
+#    cursor=connection.cursor()
+#    cursor.execute("select database();")
+#    record=cursor.fetchone()
+#    print("You are connected to database: ",record)
